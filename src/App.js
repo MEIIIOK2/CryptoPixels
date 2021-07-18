@@ -3,6 +3,7 @@ import React,{ Component } from 'react';
 import './App.css'
 import mycontract from './contracts/SimpleStorage.json'
 import Panel from './Panel';
+import ConnectMetamask from './ConnectMetamask';
 const w3=new Web3(window.ethereum)
 
 
@@ -40,8 +41,9 @@ class App extends Component {
       //   blocknum:block,
       //   balance:w3.utils.fromWei(bnb,'ether'),
       //   account:accounts[0]});
-      
-      
+    }
+    else{
+      //Getaccount()
     }
     
     
@@ -63,7 +65,7 @@ class App extends Component {
   return (
     
     <div className='App-header'>
-      
+      <ConnectMetamask/>
 
       <Panel
           width={10}
@@ -78,11 +80,9 @@ class App extends Component {
 
 }
 
-// async function Getaccount(){
-//   await window.ethereum.request({method:'eth_requestAccounts'});
-  
-  
-// }
+async function Getaccount(){
+  await window.ethereum.request({method:'eth_requestAccounts'});
+}
 // async function Deposit(){
 //   var send = contract.methods.deposit().send({from:'0x16F21cCfdfc02ABEb779daf0F415656494386fB3',value:20000000000000000})
 // }
