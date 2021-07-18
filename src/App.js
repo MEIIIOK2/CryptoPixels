@@ -4,14 +4,9 @@ import './App.css'
 import mycontract from './contracts/SimpleStorage.json'
 import Panel from './Panel';
 const w3=new Web3(window.ethereum)
-var txt ='hui'
 
-if(window.ethereum){
-  txt = 'installed'
-}
-else{
-  txt='uninstalled'
-}
+
+
 const contract = new w3.eth.Contract(mycontract,'0xDb4d081CE103cFdA3331D7C3092B1e6213eDb98A')
 
 class App extends Component {
@@ -28,9 +23,9 @@ class App extends Component {
   }
 
   async getDataneeded(){
-    console.log('updating');
+    
     let accounts = await w3.eth.getAccounts();
-    console.log(accounts);
+    
     if (accounts.length>0){
       this.setState({account:accounts[0]});
       let block= await w3.eth.getBlockNumber();
@@ -64,7 +59,7 @@ class App extends Component {
   }
   
   render(){
-    console.log('render call');
+    
   return (
     
     <div className='App-header'>
@@ -83,16 +78,16 @@ class App extends Component {
 
 }
 
-async function Getaccount(){
-  await window.ethereum.request({method:'eth_requestAccounts'});
-  console.log('succesful metamask');
+// async function Getaccount(){
+//   await window.ethereum.request({method:'eth_requestAccounts'});
   
-}
-async function Deposit(){
-  var send = contract.methods.deposit().send({from:'0x16F21cCfdfc02ABEb779daf0F415656494386fB3',value:20000000000000000})
-}
-async function GetBack(){
-  var res = contract.methods.send('0x16F21cCfdfc02ABEb779daf0F415656494386fB3',20000000000000000).call()
-}
+  
+// }
+// async function Deposit(){
+//   var send = contract.methods.deposit().send({from:'0x16F21cCfdfc02ABEb779daf0F415656494386fB3',value:20000000000000000})
+// }
+// async function GetBack(){
+//   var res = contract.methods.send('0x16F21cCfdfc02ABEb779daf0F415656494386fB3',20000000000000000).call()
+// }
 export default App;
 

@@ -34,14 +34,14 @@ class Panel extends React.Component{
     clearField(){
         this.state.rows.length=0;
         this.state.pixels.length=0;
-        console.log('cleared');
+        
     }
     
     updateRows(){
         this.clearField();
-        console.log('further updating');
         
-        console.log(this.props.data.length);
+        
+        
         for (let j = 0; j < this.props.data.length; j++) {
             this.state.pixels.push(<Pixel key={j} numbr={j} col={this.calculateColor(this.props.data[j])}/>)
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Pixel from './Pixel';
+
 class Row extends React.Component{
 
     constructor(props){
