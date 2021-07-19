@@ -1,6 +1,6 @@
 .pixels{
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     padding-bottom: 50px;
 }

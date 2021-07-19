@@ -1,6 +1,6 @@
 import React from 'react';
 import Row from './Row';
-import './Panel.css'
+import '../visuals/Panel.css'
 import Pixel from './Pixel';
 class Panel extends React.Component{
     
@@ -43,7 +43,7 @@ class Panel extends React.Component{
         
         
         for (let j = 0; j < this.props.data.length; j++) {
-            this.state.pixels.push(<Pixel key={j} numbr={j} col={this.calculateColor(this.props.data[j])}/>)
+            this.state.pixels.push(<Pixel key={j} numbr={j} col={this.calculateColor(this.props.data[j]) } updatePixel={this.props.updatePixel} />)
         }
         for(let i =0;i<this.state.pixels.length;i+=45){
             this.state.rows.push(<Row key={i} pix={this.state.pixels.slice(i,i+45)} />);

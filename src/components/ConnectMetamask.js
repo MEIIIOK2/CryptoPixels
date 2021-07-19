@@ -28,7 +28,7 @@ class ConnectMetamask extends Component{
     render(){
         return(
             <button className='connect' onClick={()=>getAccount().then(this.checkMetamask())}>{this.state.text}</button>
-        )
+        );
     }
 }
 async function getAccount(){

@@ -1,14 +1,15 @@
 import Web3 from 'web3';
 import React,{ Component } from 'react';
-import './App.css'
-import mycontract from './contracts/SimpleStorage.json'
+import '../visuals/App.css'
+import mycontract from '../contracts/SimpleStorage.json'
 import Panel from './Panel';
 import ConnectMetamask from './ConnectMetamask';
+import Selector from './Selector';
 const w3=new Web3(window.ethereum)
 
 
 
-const contract = new w3.eth.Contract(mycontract,'0xDb4d081CE103cFdA3331D7C3092B1e6213eDb98A')
+const contract = new w3.eth.Contract(mycontract,'0x2382a0323B08100E3FE9f7dCd67dF26e7E02509e')
 
 class App extends Component {
 
@@ -48,6 +49,10 @@ class App extends Component {
     
     
   }
+
+  updateSelectedPixel = (value) =>{
+    this.setState({seletcedpixel:value})
+  }
   constructor(props) {
     super(props)
     this.state= {
@@ -56,6 +61,7 @@ class App extends Component {
       account:'-',
       time:'-',
       recdata:[],
+      seletcedpixel:0,
     }
     
   }
@@ -65,12 +71,16 @@ class App extends Component {
   return (
     
     <div className='App-header'>
-      <ConnectMetamask/>
-
+      <div className = 'Toolbar'>
+        <ConnectMetamask/>
+        <Selector currpixel={this.state.seletcedpixel} contract={contract} account={this.state.account}/>
+      </div>
+      
       <Panel
           width={10}
           height={10}
-          data={this.state.recdata}/>
+          data={this.state.recdata}
+          updatePixel={this.updateSelectedPixel} />
           
 
     </div>
@@ -80,9 +90,9 @@ class App extends Component {
 
 }
 
-async function Getaccount(){
-  await window.ethereum.request({method:'eth_requestAccounts'});
-}
+// async function Getaccount(){
+//   await window.ethereum.request({method:'eth_requestAccounts'});
+// }
 // async function Deposit(){
 //   var send = contract.methods.deposit().send({from:'0x16F21cCfdfc02ABEb779daf0F415656494386fB3',value:20000000000000000})
 // }
