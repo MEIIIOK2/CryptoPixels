@@ -3,7 +3,7 @@ import '../visuals/Selector.css'
 
 class Selector extends Component{
     Deposit(contr){
-        var send = contr.methods.setPixel(this.props.currpixel,1).send({from:this.props.account,value:1000000000000000})
+        contr.methods.setPixel(this.props.currpixel,1).send({from:this.props.account,value:100000000000000})
       }
     render(){
         

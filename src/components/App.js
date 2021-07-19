@@ -9,7 +9,7 @@ const w3=new Web3(window.ethereum)
 
 
 
-const contract = new w3.eth.Contract(mycontract,'0x2382a0323B08100E3FE9f7dCd67dF26e7E02509e')
+const contract = new w3.eth.Contract(mycontract,'0x9b16E90cbA40f471C920B9950fDC8DFc44524364')
 
 class App extends Component {
 
@@ -35,8 +35,29 @@ class App extends Component {
       this.setState({balance:w3.utils.fromWei(bnb,'ether')});
       this.setState({blocknum:block});
       this.setState({time:Date().toLocaleString()})
-      let data = await contract.methods.getData().call()
-      this.setState({recdata:data});
+      let leng = await contract.methods.getLen().call()
+      let numofchunks = 0;
+      
+      if(leng%1000 === 0){
+        numofchunks = leng/1000;
+        
+      }
+      else{
+        numofchunks = Math.round(leng/1000)+1;
+      }
+      console.log(numofchunks);
+      let chunkydata=[]
+      var t0 = performance.now()
+      for(let i =0;i<numofchunks;i++){
+        let chunk = await contract.methods.getChunk(i).call()
+        
+        chunkydata = chunkydata.concat(chunk);
+      }
+      var t1 = performance.now()
+      console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+      
+      // let data =["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",]
+      this.setState({recdata:chunkydata});
       // this.setState(
       //   {recdata:data,
       //   blocknum:block,
