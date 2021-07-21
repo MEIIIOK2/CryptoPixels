@@ -2,6 +2,7 @@ import React from 'react';
 import Row from './Row';
 import '../visuals/Panel.css'
 import Pixel from './Pixel';
+const colorslist = ['#FFFFFF','#000000','#ff0221', '#ff4800', '#fccb00', '#4caf50', '#03a9f4', '#5300eb']
 class Panel extends React.Component{
     
     componentDidMount(){
@@ -21,15 +22,7 @@ class Panel extends React.Component{
     
     calculateColor(value){
         
-        if(value==="0"){
-            return "#61dafb"
-        }
-        if(value==="1"){
-            return "#ff0000"
-        }
-        else{
-            return"#000000"
-        }
+        return colorslist[value];
     }
     clearField(){
         this.state.rows.length=0;

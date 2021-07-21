@@ -1,10 +1,18 @@
 import React,{ Component } from 'react';
-import Web3 from 'web3';
-const w3 = new Web3(window.ethereum);
+// import Web3 from 'web3';
+// const w3 = new Web3(window.ethereum);
 class ConnectMetamask extends Component{
 
     async checkMetamask(){
-        let accounts = await w3.eth.getAccounts();
+        var accounts;
+        if(this.props.web3){
+            accounts = await this.props.web3.eth.getAccounts();
+        }
+        else{
+            accounts=[];
+        }
+        
+        
         if(!accounts.length>0){
             this.setState({text:'Connect Metamask!!!'})
         }
@@ -27,11 +35,15 @@ class ConnectMetamask extends Component{
 
     render(){
         return(
-            <button className='connect' onClick={()=>getAccount().then(this.checkMetamask())}>{this.state.text}</button>
+            <button className='connect' onClick={()=>getAccount().then(()=> this.checkMetamask())}>{this.state.text}</button>
         );
     }
 }
 async function getAccount(){
-    await window.ethereum.request({method:'eth_requestAccounts'});
+    if(window.ethereum){
+        await window.ethereum.request({method:'eth_requestAccounts'});
+        
+    }
+    
   }
 export default ConnectMetamask;

@@ -5,11 +5,16 @@ import mycontract from '../contracts/SimpleStorage.json'
 import Panel from './Panel';
 import ConnectMetamask from './ConnectMetamask';
 import Selector from './Selector';
-const w3=new Web3(window.ethereum)
+
+var w3;
+var contract;
+if(window.ethereum){
+  w3 =new Web3(window.ethereum);
+  contract = new w3.eth.Contract(mycontract,'0x9b16E90cbA40f471C920B9950fDC8DFc44524364');
+
+}
 
 
-
-const contract = new w3.eth.Contract(mycontract,'0x9b16E90cbA40f471C920B9950fDC8DFc44524364')
 
 class App extends Component {
 
@@ -25,8 +30,8 @@ class App extends Component {
   }
 
   async getDataneeded(){
-    
-    let accounts = await w3.eth.getAccounts();
+    if(w3){
+      let accounts = await w3.eth.getAccounts();
     
     if (accounts.length>0){
       this.setState({account:accounts[0]});
@@ -45,16 +50,16 @@ class App extends Component {
       else{
         numofchunks = Math.round(leng/1000)+1;
       }
-      console.log(numofchunks);
+      
       let chunkydata=[]
-      var t0 = performance.now()
+      // var t0 = performance.now()
       for(let i =0;i<numofchunks;i++){
         let chunk = await contract.methods.getChunk(i).call()
         
         chunkydata = chunkydata.concat(chunk);
       }
-      var t1 = performance.now()
-      console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+      // var t1 = performance.now()
+      // console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
       
       // let data =["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0",]
       this.setState({recdata:chunkydata});
@@ -67,6 +72,8 @@ class App extends Component {
     else{
       //Getaccount()
     }
+    }
+    
     
     
   }
@@ -92,9 +99,11 @@ class App extends Component {
   return (
     
     <div className='App-header'>
+      <ConnectMetamask web3={w3}/>
       <div className = 'Toolbar'>
-        <ConnectMetamask/>
+        
         <Selector currpixel={this.state.seletcedpixel} contract={contract} account={this.state.account}/>
+        
       </div>
       
       <Panel
